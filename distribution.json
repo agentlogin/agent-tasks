@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "channel": "official-github-release",
+  "npmRegistryPublication": false,
+  "sourceCommit": "576e18a6d183089dffcca1700dbd61f246b649ce",
+  "release": "https://github.com/agentlogin/reference/releases/tag/v0.2.0-beta.1",
+  "manifestUrl": "https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/release.json",
+  "manifestSha256": "0ab57450adb97b9a0ef6ac0920b1b0380e345f4116129d87e9d6122fead701be",
+  "packages": [
+    {
+      "name": "agentlogin",
+      "version": "0.2.0-beta.1",
+      "url": "https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/agentlogin-0.2.0-beta.1.tgz",
+      "integrity": "sha512-bJSycqm5ZCAi9Rl4tP/OUCpbcjDhJnT0c8LseWZQIjNOSIQD+esSuWedMtTaGPGgTbviLl+eoLnZAQkFjgL/Cg==",
+      "sha256": "ec246b43f2a2c03058a280b228e32c2d473a31103dae0907283d05c127b18bf8"
+    },
+    {
+      "name": "@agentlogin/issuer",
+      "version": "0.2.0-beta.1",
+      "url": "https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/agentlogin-issuer-0.2.0-beta.1.tgz",
+      "integrity": "sha512-p7gLp4dH6IA3k45g8JoFtjClzN9+x2gaYl4jkzH2x6vmZ5mTZS2UsFe8szFtEvIePI7DTdwX0IMTlodwnCwgWQ==",
+      "sha256": "3b7990abc0d9dac44ccf56a0a5dfc88cbfb1f9c3cbb15b5727a68357fc32a7aa"
+    },
+    {
+      "name": "@agentlogin/rp",
+      "version": "0.2.0-beta.1",
+      "url": "https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/agentlogin-rp-0.2.0-beta.1.tgz",
+      "integrity": "sha512-gXJUWcXH0Zn3oQU+ynH1LN4s/kAfR2dljO6OzTz61q8EV6by3DKAHi+X4TUQTP2OJuhSFRVUBoy3V3oRRBxPCw==",
+      "sha256": "035efdeccb4502f5193d81f4a8bbe1d5384cf3f343b8b319b9dd9b016c389eb2"
+    },
+    {
+      "name": "@agentlogin/rp-store-postgres",
+      "version": "0.2.0-beta.1",
+      "url": "https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/agentlogin-rp-store-postgres-0.2.0-beta.1.tgz",
+      "integrity": "sha512-SQA0ivjf4qLcKhkHmRPUZx++6m9oaP2dexgWDhzox+yLNPWM9KYsYtdUeZG1JM7L6QR4thIledGECk5eqTnMPQ==",
+      "sha256": "1faf3eed53b8dbd79032bb4922fa8d069e58d83ef2a81888dd76242715dac05d"
+    }
+  ]
+}

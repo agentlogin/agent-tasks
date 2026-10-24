@@ -10,6 +10,7 @@
     "start": "node src/server.mjs",
     "migrate": "node src/migrate.mjs",
     "test": "node --test --test-concurrency=1 test/*.test.mjs",
+    "verify:lock": "node scripts/verify-lock.mjs",
     "test:postgres": "node scripts/test-postgres.mjs"
   },
   "dependencies": {

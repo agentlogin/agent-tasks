@@ -8,32 +8,26 @@ independent implementation of the authentication protocol.
 
 ## Install the beta
 
-The intended dependencies are pinned to `0.2.0-beta.1`. These commands become the
-public installation path only after the release operator confirms publication:
+The Agent Login dependencies are pinned to `0.2.0-beta.1` and available as official
+[public GitHub release archives](https://github.com/agentlogin/reference/releases/tag/v0.2.0-beta.1).
+The committed lockfile selects those HTTPS archives with SHA-512 integrity; ordinary
+dependencies use the public npm registry. No npm login, local paths or sibling
+checkout is needed:
 
 ```sh
-npm ci
-npm test
-```
-
-Before publication, clean-consumer rehearsals use the separately reviewed release
-tarballs. Record their hashes and source revision. Do not claim registry installation
-or publish a production image built against local absolute tarball paths. The final
-`package-lock.json` must resolve the published registry artifacts before deployment.
-This source preview does not yet include that registry lock; publishing it, committing
-the generated lock, and repeating the clean install/container test are launch gates.
-Use the tested Node 22.23.4 patch or a newer tested maintained release.
-
-For an explicitly identified prepublication rehearsal, install all four matching
-reviewed tarballs together without creating a deployment lockfile:
-
-```sh
-npm install --ignore-scripts --no-save --package-lock=false /absolute/reviewed-bundle/agentlogin-0.2.0-beta.1.tgz /absolute/reviewed-bundle/agentlogin-rp-0.2.0-beta.1.tgz /absolute/reviewed-bundle/agentlogin-rp-store-postgres-0.2.0-beta.1.tgz /absolute/reviewed-bundle/agentlogin-issuer-0.2.0-beta.1.tgz
+npm run verify:lock
+npm ci --ignore-scripts
 PG_BIN=/path/to/postgresql/bin npm run test:postgres
 ```
 
-The Issuer package is a development-only synthetic test dependency. This rehearsal
-proves the installed artifact boundary, not npm publication or real human onboarding.
+This is public package distribution through GitHub Releases, **not a claim that the
+Agent Login packages are published in the npm registry**. Keep the lockfile: a fresh
+semver-only `npm install` can try the still-unpublished npm package names instead.
+`distribution.json` records the canonical source commit, release-manifest hash and
+each official archive's SHA-256/SHA-512. The lock verifier rejects local paths,
+workspace links, unexpected origins and substitutions for those archives.
+The Issuer package is development-only, for synthetic protocol tests.
+Use the tested Node 22.23.4 patch or a newer tested maintained release.
 
 ## Configure the independent service
 
@@ -93,7 +87,8 @@ For the container, build from this directory only:
 docker build -t agent-tasks:beta .
 ```
 
-Record the base and application image digests. Configure `/readyz` as the deployment
+The Dockerfile pins Node 22.23.4 and its immutable manifest digest. Record the resulting
+application image digest. Configure `/readyz` as the deployment
 health check, two replicas without sticky sessions, and at least 30 seconds of drain.
 Liveness is `/healthz`; readiness checks the primary and schemas. A two-second readiness
 cache coalesces probes. The service drains for 15 seconds before closing connections.
@@ -175,7 +170,16 @@ uncertain commits, Origin/Fetch Metadata, callback replay and real cryptographic
 sign-in over HTTP using installed packages. The synthetic Issuer bootstraps a test
 Owner only inside the test; this is not evidence of real human onboarding.
 
-Before public launch, repeat installation from the published packages, deploy two
+CI installs the public artifacts into an empty cache without credentials, audits
+production dependencies, and runs the PostgreSQL/HTTP/adversarial tests on PostgreSQL
+17 and Node 22.23.4. It then builds the actual Docker image and checks nonroot execution,
+safe refusal of missing production configuration, separate migrations, restricted
+runtime grants, both-schema readiness and graceful shutdown against a disposable test
+database. That container smoke explicitly uses loopback test transport; it does not
+test production TLS termination or live infrastructure. Retain the CI run and image
+evidence; writing a workflow is not evidence that its container job passed.
+
+Before public launch, accept the exact locked release and container, deploy two
 actual instances, test a fresh human-approved SentFrom identity through this website,
 and collect routing evidence for callback/action/logout/revocation. An external
 developer must follow these public instructions without unpublished help.
