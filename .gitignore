@@ -1,0 +1,7 @@
+node_modules/
+.env
+.env.*
+!config.example.env
+artifacts/
+evidence/
+*.log
