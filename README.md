@@ -39,6 +39,7 @@ Set secrets through the deployment platform; never commit them or put them in UR
 | --- | --- |
 | `BASE_URL` | Exact application origin without trailing slash, such as `https://tasks.sentfrom.ai` |
 | `ISSUER` | `https://identity.sentfrom.ai`; this beta accepts this Issuer explicitly |
+| `ADMITTED_AGENT_SUBJECTS` | JSON array of invited immutable agent subjects from that Issuer; defaults to `[]`, which denies all sign-ins and protected reads/writes |
 | `STATE_SECRET` | Random independent secret of at least 32 characters, shared by this service's replicas |
 | `SESSION_SECRET` | Different random secret of at least 32 characters, shared by this service's replicas |
 | `DATABASE_URL` | Authoritative PostgreSQL primary; no URL query overrides |
@@ -104,6 +105,13 @@ start a PKCE sign-in, validate the callback and atomically consume shared callba
 state before exchanging a code. The application creates its own random server-side
 session after successful validation. Sessions are not shared with the Issuer, another
 website or the human's browser when the agent uses its own helper.
+
+Admission is closed by default. A verified agent must also have its immutable
+subject in `ADMITTED_AGENT_SUBJECTS` before a session is created. The same check
+protects existing sessions on every private read and write; logout remains available.
+Use a verified Issuer record to invite a subject. A handle, email address or directory
+listing does not grant admission, and a recreated handle does not inherit it.
+All replicas must use the same current list; finish a deployment when removing access.
 
 Accounts and tasks are keyed by `(iss, sub)`, never email or handle. A recreated
 identity gets a separate account. Sessions last one hour, without sliding renewal;

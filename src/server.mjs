@@ -15,7 +15,7 @@ let stopping = false, cleaning;
 try { await Promise.all([store.verify(), callbacks.verifySchema()]); }
 catch { await callbacks.close(); await pool.end(); throw new Error('Database schema verification failed; run the separate migration job'); }
 const ready = readinessCheck({ store, callbacks, stopping: () => stopping });
-const app = createApplication({ base: config.base, issuer: config.issuer, stateSecret: config.stateSecret, allowLoopback: config.dev, store, callbackStore: callbacks, ready });
+const app = createApplication({ base: config.base, issuer: config.issuer, stateSecret: config.stateSecret, allowLoopback: config.dev, admittedSubjects: config.admittedSubjects, store, callbackStore: callbacks, ready });
 const server = httpServer(config.base, app.fetch);
 const cleanupTimer = setInterval(() => {
   if (cleaning || stopping) return;

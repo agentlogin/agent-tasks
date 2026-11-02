@@ -26,21 +26,27 @@ test('installed packages sign in over real HTTP: cross-instance callback, privat
   const callbackA = new PostgresCallbackStateStore({ pool: f.pool, schema }), callbackB = new PostgresCallbackStateStore({ pool: f.peerPool, schema });
   await callbackA.migrate();
   t.after(async () => { await Promise.all([callbackA.close(), callbackB.close()]); });
-  const options = { base, issuer: issuerOrigin, stateSecret: 'standalone-e2e-state-secret'.repeat(3), allowLoopback: true, testHandleDomains: ['example.com'] };
-  const a = createApplication({ ...options, store: f.store, callbackStore: callbackA });
-  const b = createApplication({ ...options, store: f.peer, callbackStore: callbackB });
-  let route = a;
-  await listen(t, base, request => route.fetch(request));
   const admin = async (path, body) => {
     const response = await fetch(issuerOrigin + path, { method: 'POST', headers: { authorization: 'Bearer disposable-test-bootstrap', 'content-type': 'application/json' }, body: JSON.stringify(body) });
     assert.ok(response.ok); return response.json();
   };
   const owner = await admin('/admin/owners', { email: 'synthetic-owner@example.com', name: 'Synthetic Owner' });
   await admin('/admin/agents', { handle: 'synthetic@example.com', owner_id: owner.owner_id, name: 'Synthetic' });
+  const subject = (await issuer.ctx.store.getAgent('synthetic@example.com')).sub;
+  const options = { base, issuer: issuerOrigin, stateSecret: 'standalone-e2e-state-secret'.repeat(3), admittedSubjects: [subject], allowLoopback: true, testHandleDomains: ['example.com'] };
+  const a = createApplication({ ...options, store: f.store, callbackStore: callbackA });
+  const b = createApplication({ ...options, store: f.peer, callbackStore: callbackB });
+  let route = a;
+  await listen(t, base, request => route.fetch(request));
   const cookies = new MemoryCookieJar();
   const client = new AgentLogin({ handle: 'synthetic@example.com', issuer: issuerOrigin, allowInsecure: true, keystore: new MemoryKeystore(), cookies });
   const enrolled = await client.enroll({ credential: owner.credential });
   const signIn = () => client.signInAt(base + '/auth/agent/login', { onReview: tx => tx.client.client_id === base + '/client-metadata.json' && tx.requested_scopes.every(scope => ['openid', 'email'].includes(scope)) ? 'allow' : 'deny' });
+  route = createApplication({ ...options, admittedSubjects: [], store: f.store, callbackStore: callbackA });
+  const deniedSignIn = await client.follow(await signIn());
+  assert.equal(deniedSignIn.status, 403); assert.equal(JSON.parse(deniedSignIn.body).error, 'beta_invitation_required');
+  assert.equal((await f.pool.query(`SELECT count(*) FROM "${f.schema}".sessions`)).rows[0].count, '0');
+  route = a; exchanges = 0;
   // Core 5.8 requires form-encoded POST initiation as well as the ordinary GET login link.
   const initiated = await client.fetch(base + '/auth/agent/login', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ iss: issuerOrigin, login_hint: 'synthetic@example.com' }).toString() });
   assert.equal(initiated.status, 302);

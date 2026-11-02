@@ -24,9 +24,11 @@ export async function bodyJson(request) {
     try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); } catch { throw new TaskError('invalid_json', 400); }
   } finally { clearTimeout(timer); await reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
-export function createApplication({ base, issuer, stateSecret, store, callbackStore, allowLoopback = false, testHandleDomains = [], ready = () => store.verify().then(() => true), recheck }) {
+export function createApplication({ base, issuer, stateSecret, store, callbackStore, admittedSubjects = [], allowLoopback = false, testHandleDomains = [], ready = () => store.verify().then(() => true), recheck }) {
   exactOrigin(base, allowLoopback); exactOrigin(issuer, allowLoopback);
   if (!stateSecret || stateSecret.length < 32) throw new Error('State secret required');
+  if (!Array.isArray(admittedSubjects) || admittedSubjects.some(s => typeof s !== 'string' || !s)) throw new Error('Invalid admission configuration');
+  const admitted = new Set(admittedSubjects);
   const dev = base.startsWith('http:');
   if (testHandleDomains.length && !dev) throw new Error('Static discovery overrides are only allowed on loopback');
   const cookieName = dev ? 'agent_tasks_sid' : '__Host-agent_tasks_sid';
@@ -43,6 +45,7 @@ export function createApplication({ base, issuer, stateSecret, store, callbackSt
     metadata: { clientName: 'Agent Tasks', initiateLoginUri: base + '/auth/agent/login', policyUri: base + '/privacy', tosUri: base + '/terms' },
     log: () => {}, // The host emits only generic status metrics, never protocol messages or full URLs.
     onSignIn: async (signIn, request) => {
+      if (!admitted.has(signIn.agent.sub)) return json({ error: 'beta_invitation_required' }, 403);
       const sid = randomBytes(32).toString('base64url');
       await store.create(sid, signIn.agent, rp.liveCheckOf(signIn), session(request));
       return new Response(null, { status: 303, headers: { location: '/tasks-board', 'set-cookie': cookie(sid, 3600) } });
@@ -72,6 +75,7 @@ export function createApplication({ base, issuer, stateSecret, store, callbackSt
     if ((method === 'GET' && ['/me', '/tasks'].includes(path)) || (method === 'POST' && ['/tasks', '/tasks/complete'].includes(path))) {
       const current = sid && await store.get(sid);
       if (!current) return json({ error: 'not_signed_in' }, 401);
+      if (current.agent.iss !== issuer || !admitted.has(current.agent.sub)) return json({ error: 'beta_invitation_required' }, 403);
       if (method === 'GET' && path === '/me') return json(current.agent);
       if (method === 'GET') return json({ tasks: await store.list(sid) });
       const input = await bodyJson(request);

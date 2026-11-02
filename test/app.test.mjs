@@ -6,7 +6,7 @@ import { configuration } from '../src/config.mjs';
 import { fixture, skip, sid, identity, live, base, deferred } from './helpers.mjs';
 const options = { skip, timeout: 15_000 };
 const stateSecret = 'application-state-secret'.repeat(3);
-const application = (store, recheck = async () => {}) => createApplication({ base, issuer: 'https://issuer.example', stateSecret, store, callbackStore: new MemoryCallbackStateStore(), recheck });
+const application = (store, recheck = async () => {}) => createApplication({ base, issuer: 'https://issuer.example', stateSecret, admittedSubjects: ['agent-a'], store, callbackStore: new MemoryCallbackStateStore(), recheck });
 const req = (path, { cookie, method = 'GET', origin = base, body, headers = {} } = {}) => new Request(base + path, { method, headers: { ...(cookie ? { cookie: `__Host-agent_tasks_sid=${cookie}` } : {}), ...(origin === undefined ? {} : { origin }), ...headers, ...(body === undefined ? {} : { 'content-type': 'application/json' }) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
 
 test('all browser/API surfaces keep privacy, CSP and cache headers without CORS', options, async t => {
@@ -75,7 +75,21 @@ test('duplicate same-name cookies fail closed and logout failures never claim su
 test('public configuration refuses unsafe origins, transport and secret reuse', () => {
   const env = { NODE_ENV: 'production', BASE_URL: 'https://tasks.sentfrom.ai', DATABASE_URL: 'postgresql://test:dummy@db.example/test', STATE_SECRET: stateSecret, SESSION_SECRET: 'session-secret'.repeat(4) };
   const good = configuration(env); assert.equal(good.database.ssl.rejectUnauthorized, true); assert.equal(good.database.max, 8);
+  assert.deepEqual(good.admittedSubjects, []);
+  assert.deepEqual(configuration({ ...env, ADMITTED_AGENT_SUBJECTS: '["approved-subject"]' }).admittedSubjects, ['approved-subject']);
+  for (const list of ['null', '{}', 'not JSON', '[""]', '["a","a"]', '["bad subject"]', '[1]', JSON.stringify(Array.from({ length: 101 }, (_, i) => 'sub-' + i))]) assert.throws(() => configuration({ ...env, ADMITTED_AGENT_SUBJECTS: list }));
   for (const overrides of [{ BASE_URL: 'http://localhost:4010' }, { BASE_URL: 'https://tasks.sentfrom.ai/' }, { DATABASE_URL: env.DATABASE_URL + '?sslmode=disable' }, { NODE_TLS_REJECT_UNAUTHORIZED: '0' }, { SESSION_SECRET: stateSecret }, { DATABASE_TRANSPORT: 'loopback-test' }, { DATABASE_TRANSPORT: 'railway-private' }, { ISSUER: 'https://unapproved.example' }]) assert.throws(() => configuration({ ...env, ...overrides }));
+});
+test('admission removal denies existing sessions without trusting handles and still permits logout', options, async t => {
+  const f = await fixture(t), cookie = sid(); await f.store.create(cookie, identity(), live(f.now()));
+  const closed = createApplication({ base, issuer: 'https://issuer.example', stateSecret, store: f.store, callbackStore: new MemoryCallbackStateStore() });
+  for (const request of [req('/me', { cookie }), req('/tasks', { cookie }), req('/tasks', { cookie, method: 'POST', body: { id: 'denied-task-0001', title: 'Not admitted' } })]) {
+    const result = await closed.fetch(request); assert.equal(result.status, 403); assert.equal((await result.json()).error, 'beta_invitation_required');
+  }
+  const replacement = sid(); await f.store.create(replacement, identity('replacement-subject'), live(f.now(), 'replacement-subject'));
+  assert.equal((await application(f.store).fetch(req('/me', { cookie: replacement }))).status, 403, 'A recreated handle must not inherit admission');
+  assert.equal((await closed.fetch(req('/logout', { cookie, method: 'POST' }))).status, 200);
+  assert.equal(await f.store.get(cookie), undefined);
 });
 test('streamed JSON parsing enforces content type and byte limit', async () => {
   await assert.rejects(bodyJson(new Request(base, { method: 'POST', body: '{}', headers: { 'content-type': 'text/plain' } })), e => e.status === 415);
