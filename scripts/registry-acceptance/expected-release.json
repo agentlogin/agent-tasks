@@ -1,0 +1,72 @@
+{
+  "packages": [
+    {
+      "name": "agentlogin",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-bJSycqm5ZCAi9Rl4tP/OUCpbcjDhJnT0c8LseWZQIjNOSIQD+esSuWedMtTaGPGgTbviLl+eoLnZAQkFjgL/Cg==",
+      "sha256": "ec246b43f2a2c03058a280b228e32c2d473a31103dae0907283d05c127b18bf8",
+      "filename": "agentlogin-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/issuer",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-p7gLp4dH6IA3k45g8JoFtjClzN9+x2gaYl4jkzH2x6vmZ5mTZS2UsFe8szFtEvIePI7DTdwX0IMTlodwnCwgWQ==",
+      "sha256": "3b7990abc0d9dac44ccf56a0a5dfc88cbfb1f9c3cbb15b5727a68357fc32a7aa",
+      "filename": "agentlogin-issuer-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/conformance",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-9tcRMQY5Sst7G6V3OfvsDXHaYIbLbtyinPQOGvV0EgVVG99lt4ykt2WpLuGN5RXv/J54o6d8cd7d9iX0ait3sA==",
+      "sha256": "7604b2bc0ad80cde4b773c9a23768b0e9036f8c590dd1af000d3c675f3464b30",
+      "filename": "agentlogin-conformance-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/agentid-mcp",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-JFzZsem3px2WTh5uOkuLLE/Qw2PxbF1GN9iDeOZd+GmHMeFt0Tqb6IwcOj5Q91p5yaUUBYT2NIfW5uJrFNQfzQ==",
+      "sha256": "80477881c8c171fbeacb0043c2756cb6aa76d3d9160a15190f1224c1e8b947d2",
+      "filename": "agentlogin-agentid-mcp-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/rp",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-gXJUWcXH0Zn3oQU+ynH1LN4s/kAfR2dljO6OzTz61q8EV6by3DKAHi+X4TUQTP2OJuhSFRVUBoy3V3oRRBxPCw==",
+      "sha256": "035efdeccb4502f5193d81f4a8bbe1d5384cf3f343b8b319b9dd9b016c389eb2",
+      "filename": "agentlogin-rp-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/mcp",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-SsZdctEs9whbc4YwT1Ut4z67wkYDUHLd9TcSwi1eODirJgzvsys5yhGJfBvYFwmsrkGineO1a2jD3JO2YEi+Ng==",
+      "sha256": "b9c82e085c141854cb716351e8fe33fe54d885a6b89aa897ae1dbe44dfe79ae7",
+      "filename": "agentlogin-mcp-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/store-postgres",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-UXfmcmxbtDVwXJp7GW7+Nvm7j3Zy/i3X7UaBsdABomoCgI89mUua5hOBESOqKi6WMADqT2NIThZX8azBEZsTuQ==",
+      "sha256": "43b7193aa20f87e183d246120cb1adaaa178cab8694cba77e2c9c6783460390c",
+      "filename": "agentlogin-store-postgres-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "@agentlogin/rp-store-postgres",
+      "version": "0.2.0-beta.1",
+      "integrity": "sha512-SQA0ivjf4qLcKhkHmRPUZx++6m9oaP2dexgWDhzox+yLNPWM9KYsYtdUeZG1JM7L6QR4thIledGECk5eqTnMPQ==",
+      "sha256": "1faf3eed53b8dbd79032bb4922fa8d069e58d83ef2a81888dd76242715dac05d",
+      "filename": "agentlogin-rp-store-postgres-0.2.0-beta.1.tgz"
+    },
+    {
+      "name": "sentfromai-mcp",
+      "version": "0.5.0-beta.1",
+      "integrity": "sha512-sD93rSK4QE9Xa6k+hpGAKnEEcZ6WAz8O33YLFQnvwzjMVo/c3WTvMyTNXX74OCea0XptRyYLV1inf3Cy5CWmDg==",
+      "sha256": "d96e673dee3ba98fe5e47aa72e9b77fe3ec1716227ab7e7ea3c2aeb1295a6d20",
+      "filename": "sentfromai-mcp-0.5.0-beta.1.tgz"
+    }
+  ],
+  "sourceManifestSha256": {
+    "agentlogin": "0ab57450adb97b9a0ef6ac0920b1b0380e345f4116129d87e9d6122fead701be",
+    "sentfromMcp": "b3027afbf2dcac67e2e342a51b2b978b0e1104bc1d3897452191796749b2d584"
+  },
+  "sourceApplicationCommit": "1f56ad5d371616981b6d2b803c0ebe54d901efc6"
+}
