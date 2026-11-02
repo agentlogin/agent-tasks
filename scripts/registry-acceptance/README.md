@@ -11,6 +11,9 @@ sources, workspace links and mismatched release SHA-512 integrity before install
 Installation uses an empty cache and disabled lifecycle scripts with an isolated npm
 configuration. Runtime code and the repository's existing GitHub-release lock stay
 unchanged. Consumer imports, CLI help and real stdio MCP inventories are exercised.
+Legacy MCP uses `initialize`; the 2026-07-28 checks use `server/discover` and the
+required metadata on every request, as defined by the current
+[MCP versioning rules](https://modelcontextprotocol.io/specification/2026-07-28/basic/versioning).
 
 Agent Tasks has 34 behavioral, HTTP and PostgreSQL tests and six distribution tests.
 The six original distribution tests intentionally require GitHub release archives.
@@ -21,6 +24,8 @@ schemas; it never connects to a production database.
 
 The final report requires all 40 checks, nine package imports and a clean dependency
 audit. MCP tests use synthetic configuration and an unreachable loopback mail target.
+Behavioral tests and the audit still run after an unrelated smoke failure when
+installation succeeded; the final job remains failed unless every check passes.
 They establish package/protocol operation, not real AgentMail sign-in, device approval,
 mail delivery, or new-human acceptance. GitHub destroys the disposable runner after
 the job. Retain the uploaded report, lockfile, TAP output and audit as release evidence.
