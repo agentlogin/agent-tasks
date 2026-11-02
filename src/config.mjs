@@ -30,6 +30,8 @@ function parseConfiguration(env) {
   else throw new Error('Unknown database transport');
   const appSchema = env.APP_DATABASE_SCHEMA ?? 'agent_tasks', callbackSchema = env.CALLBACK_DATABASE_SCHEMA ?? 'agent_tasks_callbacks';
   if (appSchema === callbackSchema || ![appSchema, callbackSchema].every(s => /^[a-z_][a-z0-9_]{0,49}$/.test(s) && !s.startsWith('pg_'))) throw new Error('Distinct safe schema names required');
-  return { base, issuer, dev, port: Number(portText), stateSecret: env.STATE_SECRET, sessionSecret: env.SESSION_SECRET, appSchema, callbackSchema,
+  const admittedSubjects = JSON.parse(env.ADMITTED_AGENT_SUBJECTS ?? '[]');
+  if (!Array.isArray(admittedSubjects) || admittedSubjects.length > 100 || admittedSubjects.some(s => typeof s !== 'string' || !s || s.length > 255 || /[\u0000-\u0020\u007f]/.test(s)) || new Set(admittedSubjects).size !== admittedSubjects.length) throw new Error('Invalid admission configuration');
+  return { base, issuer, dev, port: Number(portText), stateSecret: env.STATE_SECRET, sessionSecret: env.SESSION_SECRET, appSchema, callbackSchema, admittedSubjects,
     database: { connectionString: url.href, ssl, max: 8, connectionTimeoutMillis: 3000, idleTimeoutMillis: 30_000, options: '-c statement_timeout=5000 -c lock_timeout=3000 -c idle_in_transaction_session_timeout=10000 -c synchronous_commit=on' } };
 }
