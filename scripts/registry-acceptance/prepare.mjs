@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { appendFileSync,copyFileSync,lstatSync,mkdirSync,mkdtempSync,readFileSync,writeFileSync } from 'node:fs';
 import { dirname,join,relative,resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { consumerPackage } from './consumer-package.mjs';
 const source=fileURLToPath(new URL('../..',import.meta.url));
 assert.equal(process.env.GITHUB_EVENT_NAME,'workflow_dispatch');
 assert.equal(process.env.PUBLICATION_CONFIRMED,'true');
@@ -16,8 +17,8 @@ for(const dir of [consumer,cache,evidence])mkdirSync(dir,{recursive:true,mode:0o
 writeFileSync(globalConfig,'',{mode:0o600});
 const expected=JSON.parse(readFileSync(new URL('./expected-release.json',import.meta.url),'utf8'));
 const sources=[
- ['agentlogin','https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/release.json'],
- ['sentfromMcp','https://github.com/sentfromai/sentfromai-mcp/releases/download/v0.5.0-beta.1/release.json'],
+ ['agentlogin','https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.2/release.json'],
+ ['sentfromMcp','https://github.com/sentfromai/sentfromai-mcp/releases/download/v0.5.0-beta.2/release.json'],
 ];
 const hash=data=>createHash('sha256').update(data).digest('hex');
 async function publicManifest(url){
@@ -55,9 +56,7 @@ for(const name of tracked){
  assert.ok(!relative(source,from).startsWith('..')&&!relative(consumer,to).startsWith('..'));
  assert.ok(lstatSync(from).isFile(),'Only ordinary tracked files are copied');mkdirSync(dirname(to),{recursive:true});copyFileSync(from,to);
 }
-const pkg=JSON.parse(readFileSync(join(consumer,'package.json'),'utf8'));
-pkg.name='agent-tasks-npm-registry-acceptance';pkg.version='0.0.0';
-for(const pin of expected.packages)if(!Object.hasOwn(pkg.dependencies,pin.name))pkg.devDependencies[pin.name]=pin.version;
+const pkg=consumerPackage(JSON.parse(readFileSync(join(consumer,'package.json'),'utf8')),expected.packages);
 writeFileSync(join(consumer,'package.json'),JSON.stringify(pkg,null,2)+'\n');
 writeFileSync(join(consumer,'expected-registry-release.json'),JSON.stringify(expected,null,2)+'\n');
 for(const [from,to] of [['smoke.mjs','registry-smoke.mjs'],['verify-lock.mjs','scripts/verify-lock.mjs'],['distribution.test.mjs','test/distribution.test.mjs']])copyFileSync(new URL(from,import.meta.url),join(consumer,to));

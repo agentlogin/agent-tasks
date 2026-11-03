@@ -11,5 +11,5 @@ for(const [name,alter] of [
  ['workspace link',entry=>{entry.link=true;}],
  ['credential-bearing URL',entry=>{entry.resolved='https://user:canary@registry.npmjs.org/anything.tgz';}],
  ['wrong integrity',entry=>{entry.integrity='sha512-WRONG';}],
- ['non-registry archive',entry=>{entry.resolved='https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.1/agentlogin-rp-0.2.0-beta.1.tgz';}],
+ ['non-registry archive',entry=>{entry.resolved='https://github.com/agentlogin/reference/releases/download/v0.2.0-beta.2/agentlogin-rp-0.2.0-beta.2.tgz';}],
 ])test(`registry acceptance rejects ${name}`,()=>{const changed=structuredClone(lock);alter(changed.packages['node_modules/@agentlogin/rp']);assert.throws(()=>verifyLock(pkg,changed,expected));});
