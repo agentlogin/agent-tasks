@@ -43,6 +43,8 @@ jobs:
           node-version: '22.23.4'
       - name: Verify public distribution lock
         run: node scripts/verify-lock.mjs
+      - name: Test isolated registry consumer preparation without publication or npm access
+        run: node --test scripts/registry-acceptance/prepare.test.mjs
       - name: Install from an empty public-only cache
         run: npm ci --ignore-scripts --cache "$RUNNER_TEMP/agent-tasks-empty-cache" --userconfig /dev/null --registry=https://registry.npmjs.org/
       - name: Audit production dependency graph

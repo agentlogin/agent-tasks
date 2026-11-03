@@ -2,71 +2,71 @@
   "packages": [
     {
       "name": "agentlogin",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-bJSycqm5ZCAi9Rl4tP/OUCpbcjDhJnT0c8LseWZQIjNOSIQD+esSuWedMtTaGPGgTbviLl+eoLnZAQkFjgL/Cg==",
-      "sha256": "ec246b43f2a2c03058a280b228e32c2d473a31103dae0907283d05c127b18bf8",
-      "filename": "agentlogin-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-fnqGTQuRJKmyQWdL8Y7z/wruZ8oaHFISQNUuPA5HKeL1tK56qqKj1fEFxnCj+zO/Vq7O4ZUui8PMrlaiXnmvag==",
+      "sha256": "60a9a2bdef9fb02a40e69e2d51adfbcab00c5fbe332555afb4c2fb0515fea048",
+      "filename": "agentlogin-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/issuer",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-p7gLp4dH6IA3k45g8JoFtjClzN9+x2gaYl4jkzH2x6vmZ5mTZS2UsFe8szFtEvIePI7DTdwX0IMTlodwnCwgWQ==",
-      "sha256": "3b7990abc0d9dac44ccf56a0a5dfc88cbfb1f9c3cbb15b5727a68357fc32a7aa",
-      "filename": "agentlogin-issuer-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-f++tLBdmVGvFnKk90shKwnqkZCQX0nvtC/3xP1Ly1wmRcJaA8K/O/58I9Nj2aN4RZjsW1zagNSXuAd2ckHohig==",
+      "sha256": "367d95ed810e13713439c951068c74675f4dca7f94b23425118c7e9da21ec3db",
+      "filename": "agentlogin-issuer-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/conformance",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-9tcRMQY5Sst7G6V3OfvsDXHaYIbLbtyinPQOGvV0EgVVG99lt4ykt2WpLuGN5RXv/J54o6d8cd7d9iX0ait3sA==",
-      "sha256": "7604b2bc0ad80cde4b773c9a23768b0e9036f8c590dd1af000d3c675f3464b30",
-      "filename": "agentlogin-conformance-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-Q+xXJ+3vOFpxfPaZ/rF0T7TRv4FlyttPC/7t1KWITZTc16lWjq7gXXfUYz6+flCygCJGgIZ5WxhE3OIsyHtQkg==",
+      "sha256": "f3250b09da2a5b8d2c890a1aaeb830698a5565f239173524a7c628b17b173e4c",
+      "filename": "agentlogin-conformance-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/agentid-mcp",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-JFzZsem3px2WTh5uOkuLLE/Qw2PxbF1GN9iDeOZd+GmHMeFt0Tqb6IwcOj5Q91p5yaUUBYT2NIfW5uJrFNQfzQ==",
-      "sha256": "80477881c8c171fbeacb0043c2756cb6aa76d3d9160a15190f1224c1e8b947d2",
-      "filename": "agentlogin-agentid-mcp-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-KR9Dk/j9lcplBD1etUG18lrNd2OxRyKUo7sXF8noRy+XNL7k3hwfnksab99CNh0l9Nyz2n6gv26LiG6jMTWj9Q==",
+      "sha256": "261e280885e83373e45e0e0e814a6b73d608e030c8ea78b55eafc9e2d602ba23",
+      "filename": "agentlogin-agentid-mcp-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/rp",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-gXJUWcXH0Zn3oQU+ynH1LN4s/kAfR2dljO6OzTz61q8EV6by3DKAHi+X4TUQTP2OJuhSFRVUBoy3V3oRRBxPCw==",
-      "sha256": "035efdeccb4502f5193d81f4a8bbe1d5384cf3f343b8b319b9dd9b016c389eb2",
-      "filename": "agentlogin-rp-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-+UXgjJqFqn2HTznojw+4CNnDj9lJIVXoYjlO9EnNzfomLUGEww0gOZ0irSGVteoYZp1kqDqBrSyEjnfslMeMmQ==",
+      "sha256": "779265a52a4e3010418a9b19c0d40b1202fa15d05266fd9745fed44a9c860787",
+      "filename": "agentlogin-rp-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/mcp",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-SsZdctEs9whbc4YwT1Ut4z67wkYDUHLd9TcSwi1eODirJgzvsys5yhGJfBvYFwmsrkGineO1a2jD3JO2YEi+Ng==",
-      "sha256": "b9c82e085c141854cb716351e8fe33fe54d885a6b89aa897ae1dbe44dfe79ae7",
-      "filename": "agentlogin-mcp-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-QmfAn2GHT4i7k7mkUZDvJKYDlhLTxcGFkWQ8zQaR/MNzPo6jeozXCdyNLQRenz3Pp9vzHPp8lYHdIeoxVBZpoQ==",
+      "sha256": "9f640e05e69662e5a4bbc6e1c50caeb09722f3af128d53c51bc33097a82d21cd",
+      "filename": "agentlogin-mcp-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/store-postgres",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-UXfmcmxbtDVwXJp7GW7+Nvm7j3Zy/i3X7UaBsdABomoCgI89mUua5hOBESOqKi6WMADqT2NIThZX8azBEZsTuQ==",
-      "sha256": "43b7193aa20f87e183d246120cb1adaaa178cab8694cba77e2c9c6783460390c",
-      "filename": "agentlogin-store-postgres-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-cCugahifIR9tWgNzFTgtbTGYmzUujWMwh8whO5SmJYSuFbp1ufhHnD4iUw3T1CJNx0p/xnrhprGkBIdUCjxcUw==",
+      "sha256": "3fd8c53663965be051cc78e2957e5beb7c90300e97c8e0716e586ba2b46321c5",
+      "filename": "agentlogin-store-postgres-0.2.0-beta.2.tgz"
     },
     {
       "name": "@agentlogin/rp-store-postgres",
-      "version": "0.2.0-beta.1",
-      "integrity": "sha512-SQA0ivjf4qLcKhkHmRPUZx++6m9oaP2dexgWDhzox+yLNPWM9KYsYtdUeZG1JM7L6QR4thIledGECk5eqTnMPQ==",
-      "sha256": "1faf3eed53b8dbd79032bb4922fa8d069e58d83ef2a81888dd76242715dac05d",
-      "filename": "agentlogin-rp-store-postgres-0.2.0-beta.1.tgz"
+      "version": "0.2.0-beta.2",
+      "integrity": "sha512-TbHvdAU46fF0HhuYf5WYBHZe7mig4NSUVviRSlz9PGTZRPNcIw3wNuWQDXCHS0sOWWjZnNJgxaZ/bPtlrcAFqg==",
+      "sha256": "328ba236712d541fd28e682a72694417ec6422182a5cfbe6b24834b90f3815f2",
+      "filename": "agentlogin-rp-store-postgres-0.2.0-beta.2.tgz"
     },
     {
       "name": "sentfromai-mcp",
-      "version": "0.5.0-beta.1",
-      "integrity": "sha512-sD93rSK4QE9Xa6k+hpGAKnEEcZ6WAz8O33YLFQnvwzjMVo/c3WTvMyTNXX74OCea0XptRyYLV1inf3Cy5CWmDg==",
-      "sha256": "d96e673dee3ba98fe5e47aa72e9b77fe3ec1716227ab7e7ea3c2aeb1295a6d20",
-      "filename": "sentfromai-mcp-0.5.0-beta.1.tgz"
+      "version": "0.5.0-beta.2",
+      "integrity": "sha512-pbkZGcydYHvX6KSbxxXcibUspJ+0Y6fPlx7cMt8q5LUnlKj05zX0PQF/fiHtvVHhPirlkDjLSTLbkiZe0EhU/A==",
+      "sha256": "6ac214d9c936847a3647a9117ec6fe2efd51d7693dd4214b6fc11ae88150fd2a",
+      "filename": "sentfromai-mcp-0.5.0-beta.2.tgz"
     }
   ],
   "sourceManifestSha256": {
-    "agentlogin": "0ab57450adb97b9a0ef6ac0920b1b0380e345f4116129d87e9d6122fead701be",
-    "sentfromMcp": "b3027afbf2dcac67e2e342a51b2b978b0e1104bc1d3897452191796749b2d584"
+    "agentlogin": "875eea4ed42d4ec4322ce1005fa786320ee6b41b3709d854022ba0cebaa90c6f",
+    "sentfromMcp": "7b305aac1dc4473c6bdf76eb3bfd0ed5ddb679acd69c0a1354de59a55e717afa"
   },
   "sourceApplicationCommit": "1f56ad5d371616981b6d2b803c0ebe54d901efc6"
 }

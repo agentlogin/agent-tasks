@@ -1,7 +1,9 @@
 # Manual npm registry acceptance
 
 This workflow is dispatched only after all nine exact beta packages have been
-published and their artifact integrities verified. Its default confirmation is
+published and their artifact integrities verified. It currently targets the eight
+Agent Login `0.2.0-beta.2` packages and `sentfromai-mcp@0.5.0-beta.2`.
+Their GitHub archives are verified; npm acceptance has not yet run for these versions. Its default confirmation is
 false; pushes and pull requests cannot start this registry-only job. It has read-only
 repository permission and no production credentials, deployment step or live API test.
 
@@ -9,7 +11,10 @@ The job checks the original public release manifests against committed SHA-256
 pins, resolves exact package names into a disposable consumer, and rejects non-npm
 sources, workspace links and mismatched release SHA-512 integrity before installing.
 Installation uses an empty cache and disabled lifecycle scripts with an isolated npm
-configuration. Runtime code and the repository's existing GitHub-release lock stay
+configuration. Both runtime and development pins in the temporary package manifest
+are replaced with the exact expected versions; existing RP dependencies cannot
+silently retain the previous beta. Four offline preparation checks run in normal CI
+and do not dispatch or satisfy registry acceptance. Runtime code and the repository's existing GitHub-release lock stay
 unchanged. Consumer imports, CLI help and real stdio MCP inventories are exercised.
 Legacy MCP uses `initialize`; the 2026-07-28 checks use `server/discover` and the
 required metadata on every request, as defined by the current
